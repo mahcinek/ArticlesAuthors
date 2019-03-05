@@ -3,7 +3,7 @@ defmodule AAPiwek.Guardian.AuthPipeline do
   module: AAPiwek.Guardian,
   error_handler: AAPiwek.AuthErrorHandler
 
-  plug Guardian.Plug.VerifyHeader
+  plug Guardian.Plug.VerifyHeader, realm: "Bearer"
   plug Guardian.Plug.EnsureAuthenticated
   plug Guardian.Plug.LoadResource
 end
