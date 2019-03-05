@@ -35,3 +35,4 @@ authors_articles_piwek-*.tar
 # variables.
 /config/*.secret.exs
 /config/dev.exs
+/config/test.exs

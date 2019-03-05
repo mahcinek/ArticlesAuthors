@@ -42,7 +42,8 @@ defmodule AAPiwek.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:guardian, "~> 1.0"},
-      {:poison, "~> 3.1"}
+      {:poison, "~> 3.1"},
+      {:ex_machina, "~> 2.3", only: :test},
     ]
   end
 

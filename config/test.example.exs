@@ -11,8 +11,8 @@ config :logger, level: :warn
 
 # Configure your database
 config :authors_articles_piwek, AAPiwek.Repo,
-  username: "mpiwek",
-  password: "piwek",
+  username: "postgres",
+  password: "postgres",
   database: "authors_articles_piwek_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
