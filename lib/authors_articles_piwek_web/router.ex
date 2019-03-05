@@ -5,8 +5,17 @@ defmodule AAPiwekWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", AAPiwekWeb do
+  pipeline :jwt_authenticated do
+    plug AAPiwek.Guardian.AuthPipeline
+  end
+
+  scope "/api/v1", AAPiwekWeb do
     pipe_through :api
-    resources "/authors", AuthorController, only: [:create, :show, :update]
+    resources "/authors", AuthorController, only: [:create]
+  end
+
+  scope "/api/v1", AAPiwekWeb do
+    pipe_through [:api, :jwt_authenticated]
+    resources "/authors", AuthorController, only: [:show, :update]
   end
 end

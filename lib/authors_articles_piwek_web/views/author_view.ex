@@ -1,6 +1,7 @@
 defmodule AAPiwekWeb.AuthorView do
   use AAPiwekWeb, :view
   alias AAPiwekWeb.AuthorView
+  alias AAPiwekWeb.ChangesetView
 
   def render("index.json", %{authors: authors}) do
     %{data: render_many(authors, AuthorView, "author.json")}
@@ -23,6 +24,10 @@ defmodule AAPiwekWeb.AuthorView do
       first_name: author.first_name,
       last_name: author.last_name,
       age: author.age}
+  end
+
+  def render("error.json", changeset) do
+    ChangesetView.render("error.json", changeset)
   end
 
 end

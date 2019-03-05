@@ -19,11 +19,17 @@ defmodule AAPiwekWeb.FallbackController do
     |> put_view(AAPiwekWeb.ErrorView)
     |> render(:"403")
   end
-
-  def call(conn, {:error, _}) do
+  def call(conn, {:error, :unprocessable_entity}) do
     conn
-    |> put_status(:unprocessable_entity)
+    |> put_status(:unauthorized)
     |> put_view(AAPiwekWeb.ErrorView)
     |> render(:"422")
+  end
+
+  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(AAPiwekWeb.ChangesetView)
+    |> render(:"error", %{changeset: changeset})
   end
 end
