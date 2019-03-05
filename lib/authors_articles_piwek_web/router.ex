@@ -7,5 +7,6 @@ defmodule AAPiwekWeb.Router do
 
   scope "/api", AAPiwekWeb do
     pipe_through :api
+    resources "/authors", AuthorController, only: [:create, :show, :update]
   end
 end

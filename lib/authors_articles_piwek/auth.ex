@@ -101,4 +101,59 @@ defmodule AAPiwek.Auth do
   def change_author(%Author{} = author) do
     Author.changeset(author, %{})
   end
+
+  @doc """
+  Returns a token for given author.
+
+  ## Examples
+
+      iex> create_token(author)
+      "asddsadsasazxc"
+
+  """
+  def create_token(%Author{} = author) do
+    case AAPiwek.Guardian.encode_and_sign(author, %{}, ttl: {1, :hour}) do
+      {:ok, token, claims} ->
+        {:ok, token}
+      {_} ->
+        {:error, ""}
+    end
+  end
+
+  @doc """
+  Returns author and status for given token.
+
+  ## Examples
+
+      iex> create_token(author)
+      "asddsadsasazxc"
+
+  """
+  def authenticate(token) do
+
+    case AAPiwek.Guardian.resource_from_token(token) do
+      {:ok, resource, claims} ->
+        {:ok, resource}
+      {_} ->
+        {:error, false}
+    end
+  end
+
+  @doc """
+  Refresh given token.
+
+  ## Examples
+
+      iex> create_token(author)
+      "asddsadsasazxc"
+
+  """
+  def refresh(token) do
+    case AAPiwek.Guardian.refresh(token) do
+      {:ok, _old_stuff, {new_token, new_claims}} ->
+        {:ok, new_token}
+      {_} ->
+        {:error, ""}
+    end
+  end
 end

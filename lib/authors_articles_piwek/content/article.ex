@@ -18,15 +18,7 @@ defmodule AAPiwek.Content.Article do
     article
     |> cast(attrs, [:title, :description, :body, :published_at, :author_id])
     |> validate_required([:title, :body, :published_at, :author_id])
-    |> validate_length_of_title
+    |> validate_length(:title, max: 150)
   end
 
-  defp validate_length_of_title(changeset, field \\ :title, options \\ []) do
-    validate_change(changeset, field, fn _, title ->
-      case String.length(title) < 151 do
-        true -> []
-        false -> [{field, options[:message] || "Title to long, must be 150 charaters or less"}]
-      end
-    end)
-  end
 end

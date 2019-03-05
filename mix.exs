@@ -44,6 +44,8 @@ defmodule AAPiwek.MixProject do
       {:guardian, "~> 1.0"},
       {:poison, "~> 3.1"},
       {:ex_machina, "~> 2.3", only: :test},
+      {:comeonin, "~> 4.0"},
+      {:bcrypt_elixir, "~> 1.0"}
     ]
   end
 

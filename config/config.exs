@@ -26,6 +26,11 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Should be kept in env, but for brevity is visible in git
+config :authors_articles_piwek, AAPiwek.Guardian,
+       issuer: "AAPiwek",
+       secret_key: "a6QHABBgis6zvOHOSGVOS1/ooZ0f+pdh4UXOBDEBVs0qw+kpkjpIbDy7PYxM1gkq"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
