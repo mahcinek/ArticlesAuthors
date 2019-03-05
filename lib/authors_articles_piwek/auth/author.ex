@@ -16,5 +16,15 @@ defmodule AAPiwek.Auth.Author do
     author
     |> cast(attrs, [:first_name, :last_name, :age])
     |> validate_required([:first_name, :last_name, :age])
+    |> validate_age_size
+  end
+
+  defp validate_age_size(changeset, field \\ :age, options \\ []) do
+    validate_change(changeset, field, fn _, age ->
+      case age > 13 do
+        true -> []
+        false -> [{field, options[:message] || "Age must be greater than 13"}]
+      end
+    end)
   end
 end

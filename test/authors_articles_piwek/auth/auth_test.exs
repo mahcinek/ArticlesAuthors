@@ -9,6 +9,7 @@ defmodule AAPiwek.AuthTest do
     @valid_attrs %{age: 42, last_name: "some  last_name", first_name: "some first_name"}
     @update_attrs %{age: 43, last_name: "some updated  last_name", first_name: "some updated first_name"}
     @invalid_attrs %{age: nil, last_name: nil, first_name: nil}
+    @invalid_age %{age: 2, last_name: "Kowalski", first_name: "Adam"}
 
     def author_fixture(attrs \\ %{}) do
       {:ok, author} =
@@ -38,6 +39,10 @@ defmodule AAPiwek.AuthTest do
 
     test "create_author/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Auth.create_author(@invalid_attrs)
+    end
+
+    test "create_author/1 with too young age data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Auth.create_author(@invalid_age)
     end
 
     test "update_author/2 with valid data updates the author" do

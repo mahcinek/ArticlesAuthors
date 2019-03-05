@@ -9,6 +9,7 @@ defmodule AAPiwek.ContentTest do
 
     @update_attrs %{body: "some updated body", description: "some updated description", published_at: ~N[2011-05-18 15:01:01], title: "some updated title"}
     @invalid_attrs %{body: nil, description: nil, published_at: nil, title: nil}
+    @invalid_title %{title: String.duplicate("a",151)}
 
 
     def article_fixture() do
@@ -49,6 +50,12 @@ defmodule AAPiwek.ContentTest do
     test "update_article/2 with invalid data returns error changeset" do
       article = article_fixture()
       assert {:error, %Ecto.Changeset{}} = Content.update_article(article, @invalid_attrs)
+      assert article == Content.get_article_ass!(article.id)
+    end
+
+    test "update_article/2 with too long title returns error changeset" do
+      article = article_fixture()
+      assert {:error, %Ecto.Changeset{}} = Content.update_article(article, @invalid_title)
       assert article == Content.get_article_ass!(article.id)
     end
 

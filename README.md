@@ -6,6 +6,7 @@ To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
   * Create dev.exs form dev.example.exs changing the database setup to match your PostgreSQL info
+  * Create test.exs form test.example.exs changing the database setup to match your PostgreSQL info
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server`
 
