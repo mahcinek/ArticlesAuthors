@@ -19,13 +19,14 @@ defmodule AAPiwekWeb.AuthorController do
   end
 
   def show(conn, %{"id" => id}) do
-    author = Guardian.Plug.current_resource(conn)
+    author = Auth.get_author!(id)
     render(conn, "show.json", author: author)
   end
 
-  def update(conn, %{"id" => id, "author" => author_params}) do
+  def update(conn, %{"author" => author_params}) do
     author = Guardian.Plug.current_resource(conn)
     with {:ok, %Author{} = author} <- Auth.update_author(author, author_params) do
+
       render(conn, "show.json", author: author)
     end
   end

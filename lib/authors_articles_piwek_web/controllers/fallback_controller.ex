@@ -17,11 +17,18 @@ defmodule AAPiwekWeb.FallbackController do
     conn
     |> put_status(:unauthorized)
     |> put_view(AAPiwekWeb.ErrorView)
+    |> render(:"401")
+  end
+
+  def call(conn, {:error, :forbidden}) do
+    conn
+    |> put_status(:forbidden)
+    |> put_view(AAPiwekWeb.ErrorView)
     |> render(:"403")
   end
   def call(conn, {:error, :unprocessable_entity}) do
     conn
-    |> put_status(:unauthorized)
+    |> put_status(:unprocessable_entity)
     |> put_view(AAPiwekWeb.ErrorView)
     |> render(:"422")
   end
@@ -30,6 +37,6 @@ defmodule AAPiwekWeb.FallbackController do
     conn
     |> put_status(:unprocessable_entity)
     |> put_view(AAPiwekWeb.ChangesetView)
-    |> render(:"error", %{changeset: changeset})
+    |> render(:error, %{changeset: changeset})
   end
 end

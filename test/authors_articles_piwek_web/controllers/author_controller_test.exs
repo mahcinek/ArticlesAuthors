@@ -63,8 +63,8 @@ defmodule AAPiwekWeb.AuthorControllerTest do
 
   setup [:setup_auth]
 
-    test "renders author when data is valid", %{conn: conn, author: %Author{id: id} = author} do
-      conn = put(conn, Routes.author_path(conn, :update, author), author: @update_attrs)
+    test "renders author when data is valid", %{conn: conn, author: %Author{id: id} = _author} do
+      conn = put(conn, Routes.author_path(conn, :update), author: @update_attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.author_path(conn, :show, id))
@@ -77,8 +77,8 @@ defmodule AAPiwekWeb.AuthorControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
-    test "renders errors when data is invalid", %{conn: conn, author: author} do
-      conn = put(conn, Routes.author_path(conn, :update, author), author: @invalid_attrs)
+    test "renders errors when data is invalid", %{conn: conn, author: _author} do
+      conn = put(conn, Routes.author_path(conn, :update), author: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

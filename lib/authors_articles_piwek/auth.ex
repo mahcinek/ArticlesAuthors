@@ -7,6 +7,7 @@ defmodule AAPiwek.Auth do
   alias AAPiwek.Repo
 
   alias AAPiwek.Auth.Author
+  alias AAPiwek.Content.Article
 
   @doc """
   Returns the list of authors.
@@ -154,6 +155,39 @@ defmodule AAPiwek.Auth do
         {:ok, new_token}
       {_} ->
         {:error, ""}
+    end
+  end
+
+  @doc """
+  Find articles belonging to Author.
+
+  ## Examples
+
+      iex> get_articles(author)
+
+  """
+  def get_articles(author) do
+    a_id = author.id
+    query = from a in Article, where: a.author_id == ^a_id
+    Repo.all(query)
+  end
+  @doc """
+  Find articles belonging to Author.
+
+  ## Examples
+
+      iex> create_token(author)
+      "asddsadsasazxc"
+
+  """
+  def get_article(author, article_id) do
+    a_id = author.id
+    query = from a in Article, where: a.author_id == ^a_id and a.id == ^article_id
+    case Repo.one(query) do
+      nil ->
+        {:error, :not_found}
+      article ->
+        {:ok, article: article}
     end
   end
 end

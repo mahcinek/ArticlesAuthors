@@ -1,7 +1,9 @@
 defmodule AAPiwekWeb.ArticleController do
   use AAPiwekWeb, :controller
+  require Logger
 
   alias AAPiwek.Content
+  alias AAPiwek.Auth
   alias AAPiwek.Content.Article
 
   action_fallback AAPiwekWeb.FallbackController
@@ -22,10 +24,19 @@ defmodule AAPiwekWeb.ArticleController do
   end
 
   def delete(conn, %{"id" => id}) do
-    article = Content.get_article!(id)
+    with {:ok, article: %Article{} = article} <- get_art(Guardian.Plug.current_resource(conn), id) do
+      with {:ok, %Article{}} <- Content.delete_article(article) do
+        send_resp(conn, :no_content, "")
+      end
+    end
+  end
 
-    with {:ok, %Article{}} <- Content.delete_article(article) do
-      send_resp(conn, :no_content, "")
+  defp get_art(author, article_id) do
+    case Auth.get_article(author, article_id) do
+      {:error,_} ->
+        {:error, :forbidden}
+      {:ok, article} ->
+        {:ok, article}
     end
   end
 end

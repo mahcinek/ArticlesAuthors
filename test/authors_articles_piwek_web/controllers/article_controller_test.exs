@@ -2,10 +2,8 @@ defmodule AAPiwekWeb.ArticleControllerTest do
   use AAPiwekWeb.ConnCase
 
   alias AAPiwek.Content
-  alias AAPiwek.Content.Article
   alias AAPiwek.Auth
   import AAPiwek.Factory
-  require IEx
 
   @create_attrs %{
     body: "some body",
@@ -47,7 +45,7 @@ defmodule AAPiwekWeb.ArticleControllerTest do
   end
 
   describe "delete article" do
-    setup [:setup_auth, :create_article]
+    setup [:create_article_auth]
 
     test "deletes chosen article", %{conn: conn, article: article} do
       conn = delete(conn, Routes.article_path(conn, :delete, article))
@@ -59,6 +57,16 @@ defmodule AAPiwekWeb.ArticleControllerTest do
   defp create_article(_) do
     article = insert(:article)
     {:ok, article: article}
+  end
+
+  defp create_article_auth %{conn: conn} do
+    article = insert(:article)
+    author = article.author
+    {:ok, jwt} = Auth.create_token(author)
+    conn = conn
+           |> put_req_header("accept", "application/json")
+           |> put_req_header("authorization", "Bearer #{jwt}")
+    {:ok, conn: conn, author: author, token: jwt, article: article}
   end
 
   defp setup_auth %{conn: conn} do
