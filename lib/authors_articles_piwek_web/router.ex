@@ -17,5 +17,6 @@ defmodule AAPiwekWeb.Router do
   scope "/api/v1", AAPiwekWeb do
     pipe_through [:api, :jwt_authenticated]
     resources "/authors", AuthorController, only: [:show, :update]
+    resources "/articles", ArticleController, only: [:index, :create, :delete]
   end
 end

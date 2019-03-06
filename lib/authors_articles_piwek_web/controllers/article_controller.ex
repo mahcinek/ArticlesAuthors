@@ -7,29 +7,17 @@ defmodule AAPiwekWeb.ArticleController do
   action_fallback AAPiwekWeb.FallbackController
 
   def index(conn, _params) do
-    articles = Content.list_articles()
+    articles = Content.list_articles_ass()
     render(conn, "index.json", articles: articles)
   end
 
   def create(conn, %{"article" => article_params}) do
-    with {:ok, %Article{} = article} <- Content.create_article(article_params) do
+    author = Guardian.Plug.current_resource(conn)
+    with {:ok, %Article{} = article} <-
+          Content.create_article(Map.put(article_params, "author_id", author.id)) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.article_path(conn, :show, article))
-      |> render("show.json", article: article)
-    end
-  end
-
-  def show(conn, %{"id" => id}) do
-    article = Content.get_article!(id)
-    render(conn, "show.json", article: article)
-  end
-
-  def update(conn, %{"id" => id, "article" => article_params}) do
-    article = Content.get_article!(id)
-
-    with {:ok, %Article{} = article} <- Content.update_article(article, article_params) do
-      render(conn, "show.json", article: article)
+      |> render("create.json", article: article)
     end
   end
 

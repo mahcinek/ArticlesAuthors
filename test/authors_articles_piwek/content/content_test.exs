@@ -30,7 +30,7 @@ defmodule AAPiwek.ContentTest do
       assert article = insert(:article)
       assert article.body == "some body"
       assert article.description == "some description"
-      assert article.published_at == ~N[2010-04-17 14:00:00]
+      assert article.published_at == DateTime.from_naive!(~N[2010-04-17 14:00:00], "Etc/UTC")
       assert article.title == "some title"
     end
 
@@ -43,7 +43,7 @@ defmodule AAPiwek.ContentTest do
       assert {:ok, %Article{} = article} = Content.update_article(article, @update_attrs)
       assert article.body == "some updated body"
       assert article.description == "some updated description"
-      assert article.published_at == ~N[2011-05-18 15:01:01]
+      assert article.published_at == DateTime.from_naive!(~N[2011-05-18 15:01:01], "Etc/UTC")
       assert article.title == "some updated title"
     end
 
