@@ -21,15 +21,6 @@ defmodule AAPiwekWeb.AuthorControllerTest do
     author
   end
 
-  setup %{conn: conn} do
-    author = fixture(:author)
-    {:ok, jwt} = Auth.create_token(author)
-    conn = conn
-           |> put_req_header("accept", "application/json")
-           |> put_req_header("authorization", "Bearer #{jwt}")
-    {:ok, conn: conn, author: author, token: jwt}
-  end
-
   describe "create author" do
     test "renders author when data is valid", %{conn: conn} do
       conn = post(conn, Routes.author_path(conn, :create), author: @create_attrs)
@@ -49,6 +40,9 @@ defmodule AAPiwekWeb.AuthorControllerTest do
   end
 
   describe "show author" do
+
+  setup [:setup_auth]
+
     test "renders author when data is valid", %{conn: conn, author: %Author{id: id}} do
       conn = get(conn, Routes.author_path(conn, :show, id))
       assert %{
@@ -66,6 +60,8 @@ defmodule AAPiwekWeb.AuthorControllerTest do
   end
 
   describe "update author" do
+
+  setup [:setup_auth]
 
     test "renders author when data is valid", %{conn: conn, author: %Author{id: id} = author} do
       conn = put(conn, Routes.author_path(conn, :update, author), author: @update_attrs)
@@ -85,6 +81,15 @@ defmodule AAPiwekWeb.AuthorControllerTest do
       conn = put(conn, Routes.author_path(conn, :update, author), author: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
+  end
+
+  defp setup_auth %{conn: conn} do
+    author = fixture(:author)
+    {:ok, jwt} = Auth.create_token(author)
+    conn = conn
+           |> put_req_header("accept", "application/json")
+           |> put_req_header("authorization", "Bearer #{jwt}")
+    {:ok, conn: conn, author: author, token: jwt}
   end
 
 end
