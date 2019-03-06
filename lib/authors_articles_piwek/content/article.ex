@@ -6,7 +6,7 @@ defmodule AAPiwek.Content.Article do
   schema "articles" do
     field :body, :string
     field :description, :string
-    field :published_at, :naive_datetime
+    field :published_at, :utc_datetime
     field :title, :string
     belongs_to :author, AAPiwek.Auth.Author, foreign_key: :author_id
 
