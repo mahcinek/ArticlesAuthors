@@ -104,17 +104,19 @@ defmodule AAPiwek.Auth do
   end
 
   @doc """
-  Returns a token for given author.
+  Returns a token for given author. Token works for one day.
+  Currently there is no endpoint for refreshing tokens/getting new ones for
+  exisitng author. In normal application that should be implemented.
 
   ## Examples
 
       iex> create_token(author)
-      "asddsadsasazxc"
+      {:ok, "asddsadsasazxc"}
 
   """
   def create_token(%Author{} = author) do
-    case AAPiwek.Guardian.encode_and_sign(author, %{}, ttl: {1, :hour}) do
-      {:ok, token, claims} ->
+    case AAPiwek.Guardian.encode_and_sign(author, %{}, ttl: {1, :day}) do
+      {:ok, token, _claims} ->
         {:ok, token}
       {_} ->
         {:error, ""}
@@ -126,14 +128,14 @@ defmodule AAPiwek.Auth do
 
   ## Examples
 
-      iex> create_token(author)
-      "asddsadsasazxc"
+      iex> authenticate(token)
+      {:ok, author}
 
   """
   def authenticate(token) do
 
     case AAPiwek.Guardian.resource_from_token(token) do
-      {:ok, resource, claims} ->
+      {:ok, resource, _claims} ->
         {:ok, resource}
       {_} ->
         {:error, false}
@@ -141,17 +143,17 @@ defmodule AAPiwek.Auth do
   end
 
   @doc """
-  Refresh given token.
+  Refresh given token. Unused but useful when creating real site for token refresh
 
   ## Examples
 
-      iex> create_token(author)
-      "asddsadsasazxc"
+      iex> refresh(token)
+      {:ok, new_token}
 
   """
   def refresh(token) do
     case AAPiwek.Guardian.refresh(token) do
-      {:ok, _old_stuff, {new_token, new_claims}} ->
+      {:ok, _old_stuff, {new_token, _new_claims}} ->
         {:ok, new_token}
       {_} ->
         {:error, ""}
@@ -172,12 +174,11 @@ defmodule AAPiwek.Auth do
     Repo.all(query)
   end
   @doc """
-  Find articles belonging to Author.
+  Find single article with given id belonging to Author.
 
   ## Examples
 
-      iex> create_token(author)
-      "asddsadsasazxc"
+      iex> get_article(author, 11)
 
   """
   def get_article(author, article_id) do

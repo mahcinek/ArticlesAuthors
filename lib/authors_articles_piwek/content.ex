@@ -27,7 +27,7 @@ defmodule AAPiwek.Content do
 
   ## Examples
 
-      iex> list_articles()
+      iex> list_articles_ass()
       [%Article{}, ...]
 
   """

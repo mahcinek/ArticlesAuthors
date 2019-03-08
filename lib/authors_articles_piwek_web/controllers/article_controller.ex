@@ -31,6 +31,19 @@ defmodule AAPiwekWeb.ArticleController do
     end
   end
 
+  @doc """
+  Queries database and returns right error if needed
+
+  ## Examples
+
+      iex> get_art(author, article_id)
+      {:ok, %Article{}}
+
+      iex> get_art(author, bad_article_id)
+      {:error, :forbidden}
+
+  """
+
   defp get_art(author, article_id) do
     case Auth.get_article(author, article_id) do
       {:error,_} ->
