@@ -2,6 +2,12 @@
 
 Authors and Articles example API app
 
+# Prerequisites
+
+Info about phoenix intalation can be found [here](https://phoenixframework.readme.io/docs/installation)
+
+# How to start
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
