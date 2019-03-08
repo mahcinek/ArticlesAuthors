@@ -4,7 +4,7 @@ Authors and Articles example API app
 
 # Prerequisites
 
-Info about phoenix intalation can be found [here](https://phoenixframework.readme.io/docs/installation)
+Info about phoenix instalation can be found [here](https://phoenixframework.readme.io/docs/installation)
 
 # How to start
 
