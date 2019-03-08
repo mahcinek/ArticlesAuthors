@@ -14,4 +14,4 @@ To start your Phoenix server:
 
 Now all of the API endpoints will be avabile at the adress starting with [`localhost:4000/api`](http://localhost:4000/api) from your browser.
 If you deploy this program remeber to use https instead of http (can be changed in config with cert).
-More info about SSL ['here'](https://phoenixframework.readme.io/docs/configuration-for-ssl)
+More info about SSL [here](https://phoenixframework.readme.io/docs/configuration-for-ssl)
