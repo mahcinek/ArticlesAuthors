@@ -5,8 +5,8 @@ Authors and Articles example API app
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
-  * Create dev.exs form dev.example.exs changing the database setup to match your PostgreSQL info
-  * Create test.exs form test.example.exs changing the database setup to match your PostgreSQL info
+  * Create dev.exs form dev.example.exs changing the database setup to match your PostgreSQL info. If dev.exs exists delete it and replace with dev.example.exs changing its name to dev.exs including your PostgeSQL credentials.
+  * Create test.exs form test.example.exs changing the database setup to match your PostgreSQL info. If test.exs exists delete it and replace with test.example.exs changing its name to dev.exs including your PostgeSQL credentials.
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix server with `mix phx.server`
   * You can find endpoint docs created with bureaucrat at DOCS.md
