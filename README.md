@@ -10,6 +10,7 @@ To start your Phoenix server:
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix server with `mix phx.server`
   * You can find endpoint docs created with bureaucrat at DOCS.md
+  * You can can run tests with `mix test`
 
 Now all of the API endpoints will be avabile at the adress starting with [`localhost:4000/api`](http://localhost:4000/api) from your browser.
 If you deploy this program remeber to use https instead of http (can be changed in config with cert).
