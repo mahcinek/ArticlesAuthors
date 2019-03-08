@@ -24,6 +24,7 @@ defmodule AAPiwekWeb.AuthorControllerTest do
   describe "create author" do
     test "renders author when data is valid", %{conn: conn} do
       conn = post(conn, Routes.author_path(conn, :create), author: @create_attrs)
+             |> doc(description: "Create Author", operation_id: "create_author")
       assert %{
                "id" => id,
                "age" => 42,
@@ -45,6 +46,7 @@ defmodule AAPiwekWeb.AuthorControllerTest do
 
     test "renders author when data is valid", %{conn: conn, author: %Author{id: id}} do
       conn = get(conn, Routes.author_path(conn, :show, id))
+             |> doc(description: "Show author", operation_id: "show_author")
       assert %{
                "id" => id,
                "age" => 42,
@@ -65,6 +67,7 @@ defmodule AAPiwekWeb.AuthorControllerTest do
 
     test "renders author when data is valid", %{conn: conn, author: %Author{id: id} = _author} do
       conn = put(conn, Routes.author_path(conn, :update), author: @update_attrs)
+             |> doc(description: "Update author", operation_id: "update_author")
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.author_path(conn, :show, id))

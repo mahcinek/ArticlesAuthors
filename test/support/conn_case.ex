@@ -20,6 +20,7 @@ defmodule AAPiwekWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       alias AAPiwekWeb.Router.Helpers, as: Routes
+      import Bureaucrat.Helpers
 
       # The default endpoint for testing
       @endpoint AAPiwekWeb.Endpoint

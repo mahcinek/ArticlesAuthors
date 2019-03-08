@@ -23,10 +23,11 @@ defmodule AAPiwekWeb.ArticleControllerTest do
   end
 
   describe "index" do
-    setup [:setup_auth]
+    setup [:setup_auth, :create_article]
     test "lists all articles", %{conn: conn} do
       conn = get(conn, Routes.article_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
+             |> doc(description: "List all articles", operation_id: "list_articles")
+      assert json_response(conn, 200)["data"] !== []
     end
   end
 
@@ -35,6 +36,7 @@ defmodule AAPiwekWeb.ArticleControllerTest do
 
     test "renders article when data is valid", %{conn: conn} do
       conn = post(conn, Routes.article_path(conn, :create), article: @create_attrs)
+             |> doc(description: "Create article", operation_id: "create_article")
       assert %{"id" => id} = json_response(conn, 201)["data"]
     end
 
@@ -49,6 +51,7 @@ defmodule AAPiwekWeb.ArticleControllerTest do
 
     test "deletes chosen article", %{conn: conn, article: article} do
       conn = delete(conn, Routes.article_path(conn, :delete, article))
+             |> doc(description: "Delete article", operation_id: "delete_article")
       assert response(conn, 204)
 
     end
